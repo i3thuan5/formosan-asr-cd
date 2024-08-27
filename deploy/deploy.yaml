@@ -21,6 +21,11 @@
       ansible.builtin.template:
         src: .env.template
         dest: "{{ tsuanan_path }}/.env"
+    - name: 設定model_cache檔案簿仔
+      ansible.builtin.file:
+        path: "{{ tsuanan_path }}/model_cache"
+        state: directory
+        mode: '1777'
     - name: 開docker compose up -d
       community.docker.docker_compose_v2:
         project_src: "{{ tsuanan_path }}"
