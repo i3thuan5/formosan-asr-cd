@@ -1,4 +1,5 @@
-services:   
+---
+services:
   asr:
     image: registry.hf.space/formospeech-formosan-asr:latest
     command: python app.py
