@@ -7,6 +7,13 @@ services:
       - 7860
     volumes:
       - "./model_cache:/home/user/.cache:rw"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     networks:
       - default
       - nginx-bridge
