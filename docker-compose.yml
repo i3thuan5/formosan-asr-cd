@@ -15,9 +15,6 @@ services:
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
 
-volumes:
-  model_cache:
-
 networks:
   nginx-bridge:
     external: true
