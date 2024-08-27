@@ -5,7 +5,7 @@ services:
     expose:
       - 7860
     volumes:
-      - "model_cache:/home/user/.cache:rw"
+      - "./model_cache:/home/user/.cache:rw"
     networks:
       - default
       - nginx-bridge
