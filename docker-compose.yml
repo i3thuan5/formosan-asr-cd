@@ -2,6 +2,10 @@ services:
   asr:
     image: registry.hf.space/formospeech-formosan-asr:latest
     command: python app.py
+    expose:
+      - 7860
+    volumes:
+      - "model_cache:/home/user/.cache:rw"
     networks:
       - default
       - nginx-bridge
@@ -10,9 +14,10 @@ services:
       - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sujiphuat.ithuan.tw}
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
-  
+
 volumes:
-  
+  model_cache:
+
 networks:
   nginx-bridge:
     external: true
