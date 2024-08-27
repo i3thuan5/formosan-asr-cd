@@ -21,27 +21,9 @@
       ansible.builtin.template:
         src: .env.template
         dest: "{{ tsuanan_path }}/.env"
-    - name: Log into DockerHub
-      community.docker.docker_login:
-        username: "{{ DOCKER_USER }}"
-        password: "{{ DOCKER_TOKEN }}"
     - name: 開docker compose up -d
       community.docker.docker_compose_v2:
         project_src: "{{ tsuanan_path }}"
         build: "always"
         pull: "always"
         remove_orphans: true
-    - name: 等5秒hōo docker開--開
-      ansible.builtin.wait_for:
-        timeout: 5
-      delegate_to: localhost
-    - name: 更新資料庫
-      ansible.builtin.command: |
-        docker-compose exec -T gunicorn python manage.py migrate
-      args:
-        chdir: "{{ tsuanan_path }}"
-    - name: 更新nginx
-      ansible.builtin.command: |
-        docker-compose exec -T nginx nginx -s reload
-      args:
-        chdir: "{{ tsuanan_path }}"
