@@ -1,0 +1,18 @@
+services:   
+  asr:
+    image: registry.hf.space/formospeech-formosan-asr:latest
+    command: python app.py
+    networks:
+      - default
+      - nginx-bridge
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-sujiphuat.ithuan.tw}
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sujiphuat.ithuan.tw}
+      - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
+    restart: always
+  
+volumes:
+  
+networks:
+  nginx-bridge:
+    external: true
