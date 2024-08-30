@@ -1,7 +1,7 @@
 ---
 services:
   asr:
-    image: registry.hf.space/formospeech-formosan-asr:latest
+    build: ./
     command: python app.py
     expose:
       - 7860
