@@ -18,8 +18,8 @@ services:
       - default
       - nginx-bridge
     environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST:-sujiphuat.ithuan.tw}
-      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sujiphuat.ithuan.tw}
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
 
