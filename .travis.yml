@@ -1,0 +1,35 @@
+---
+os: linux
+dist: jammy
+services:
+  - docker
+language: python
+python:
+  - '3.10'
+before_install:
+  - pip install --upgrade pip setuptools
+branches:
+  only:
+    - main
+jobs:
+  include:
+    - name: Check YAML format
+      install:
+        - pip install tox
+      script:
+        - tox -e yamllint
+    - name: pymarkdown
+      install:
+        - pip install tox
+      script:
+        - tox -e pymarkdown
+    - name: flake8
+      install:
+        - pip install tox
+      script:
+        - tox -e flake8
+    - name: Check Bash format
+      install:
+        - pip install tox
+      script:
+        - tox -e shellcheck

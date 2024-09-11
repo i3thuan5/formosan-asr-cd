@@ -1,0 +1,28 @@
+---
+services:
+  asr:
+    image: registry.hf.space/formospeech-formosan-asr:latest
+    command: python app.py
+    expose:
+      - 7860
+    volumes:
+      - "./model_cache:/home/user/.cache:rw"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - default
+      - nginx-bridge
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
+    restart: always
+
+networks:
+  nginx-bridge:
+    external: true
