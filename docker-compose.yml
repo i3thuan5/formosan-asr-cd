@@ -15,11 +15,10 @@ services:
               count: all
               capabilities: [gpu]
     networks:
-      - default
       - nginx-bridge
     environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
-      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
 

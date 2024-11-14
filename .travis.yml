@@ -54,6 +54,6 @@ jobs:
             --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
             --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
             --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
-            --extra-vars "VIRTUAL_HOST=${VIRTUAL_HOST}"
+            --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
             --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
           '
