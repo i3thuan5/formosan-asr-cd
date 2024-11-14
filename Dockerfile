@@ -1,3 +1,3 @@
-FROM registry.hf.space/formospeech-formosan-asr:latest
+FROM registry.hf.space/ithuan-formosan-asr:latest
 
 COPY app.py DEMO.md ./
