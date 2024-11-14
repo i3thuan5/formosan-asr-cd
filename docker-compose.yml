@@ -3,7 +3,7 @@ services:
   asr:
     build: ./asr/
     volumes:
-      - "./asr_model_cache:/home/user/.cache:rw"
+      - "./model_cache_asr:/home/user/.cache:rw"
     deploy:
       resources:
         reservations:
@@ -21,7 +21,7 @@ services:
   tts:
     build: ./tts
     volumes:
-      - "./tts_model_cache:/home/user/.cache:rw"
+      - "./model_cache_tts:/home/user/.cache:rw"
     deploy:
       resources:
         reservations:
