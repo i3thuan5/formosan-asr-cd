@@ -18,9 +18,11 @@ def load_pipe(model_id: str):
         device=device,
     )
 
+
 OmegaConf.register_new_resolver("load_pipe", load_pipe)
 
 models_config = OmegaConf.to_object(OmegaConf.load("configs/models.yaml"))
+
 
 def automatic_speech_recognition(model_id: str, dialect_id: str, audio_file: str):
     model = models_config[model_id]["model"]
