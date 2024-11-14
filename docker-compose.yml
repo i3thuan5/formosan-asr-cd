@@ -1,10 +1,7 @@
 ---
 services:
   asr:
-    build: ./
-    command: python app.py
-    expose:
-      - 7860
+    build: ./asr/
     volumes:
       - "./model_cache:/home/user/.cache:rw"
     deploy:
