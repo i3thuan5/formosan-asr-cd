@@ -3,7 +3,7 @@ services:
   asr:
     build: ./asr/
     volumes:
-      - "./model_cache:/home/user/.cache:rw"
+      - "./asr_model_cache:/home/user/.cache:rw"
     deploy:
       resources:
         reservations:
@@ -19,10 +19,7 @@ services:
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
   tts:
-    build: ./
-    command: python app.py
-    expose:
-      - 7860
+    build: ./tts
     volumes:
       - "./tts_model_cache:/home/user/.cache:rw"
     deploy:
