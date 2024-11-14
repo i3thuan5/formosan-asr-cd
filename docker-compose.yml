@@ -19,7 +19,7 @@ services:
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
   tts:
-    build: ./tts
+    build: ./tts/
     volumes:
       - "./model_cache_tts:/home/user/.cache:rw"
     deploy:
