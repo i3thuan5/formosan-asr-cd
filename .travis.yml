@@ -11,7 +11,7 @@ before_install:
 branches:
   only:
     - main
-    - CD-demo-md
+    - Ka-hapsing
 jobs:
   include:
     - name: Check YAML format
@@ -36,7 +36,7 @@ jobs:
         - tox -e shellcheck
     - stage: deploy
       name: deploy
-      if: (type = push or type = cron) and (branch = main or branch = CD-demo-md)
+      if: (type = push or type = cron) and (branch = main or branch = Ka-hapsing)
       install:
         - pip install ansible
       before_script:
