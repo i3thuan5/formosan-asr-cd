@@ -1,0 +1,17 @@
+---
+yourtts-three-denoised-finetune:
+  model: ${load_model:united-link/yourtts-formosan-three-denoised-finetune}
+  language_mapping:
+    阿美: 阿美
+    賽德克: 賽德克
+    太魯閣: 太魯閣
+  speaker_mapping:  # display_name: id
+    男/阿美/秀姑巒/族語E樂園: klokah_eval_ami_concat#wav_concat/klokah_eval_ami/005060_0.24-4.62.wav
+    女/阿美/南勢/族語E樂園: klokah_eval_ami_concat#wav_concat/klokah_eval_ami/003879_0.0-5.01.wav
+    男/賽德克/都達/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/002414_3.1-8.38.wav
+    男/賽德克/德固達雅/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/003047_13.95-17.19.wav
+    女/賽德克/德鹿谷/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/002443_0.0-3.66.wav
+    男/太魯閣/族語E樂園: klokah_eval_trv_concat#wav_concat/klokah_eval_trv/000899_19.44-23.49.wav
+    女/太魯閣/族語E樂園: klokah_eval_trv_concat#wav_concat/klokah_eval_trv/000771_3.3-8.22.wav
+    女/阿美/秀姑巒/意傳: ithuan_ami
+    女/太魯閣/意傳: ithuan_trv
