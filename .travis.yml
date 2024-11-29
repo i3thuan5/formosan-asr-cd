@@ -11,7 +11,7 @@ before_install:
 branches:
   only:
     - main
-    - Ka-hapsing
+    - Ka-kaldi
 jobs:
   include:
     - name: Check YAML format
