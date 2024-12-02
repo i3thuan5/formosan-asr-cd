@@ -24,10 +24,6 @@ click==8.1.7
     # via
     #   typer
     #   uvicorn
-contourpy==1.2.1
-    # via matplotlib
-cycler==0.12.1
-    # via matplotlib
 exceptiongroup==1.2.2
     # via anyio
 fastapi==0.115.5
@@ -36,15 +32,13 @@ ffmpy==0.4.0
     # via gradio
 filelock==3.16.1
     # via huggingface-hub
-fonttools==4.54.1
-    # via matplotlib
 fsspec==2024.10.0
     # via
     #   gradio-client
     #   huggingface-hub
-gradio==4.44.1
+gradio==5.5.0
     # via -r requirements.in
-gradio-client==1.3.0
+gradio-client==1.4.2
     # via gradio
 h11==0.14.0
     # via
@@ -56,6 +50,7 @@ httpx==0.27.2
     # via
     #   gradio
     #   gradio-client
+    #   safehttpx
 huggingface-hub==0.26.1
     # via
     #   gradio
@@ -65,27 +60,19 @@ idna==3.10
     #   anyio
     #   httpx
     #   requests
-importlib-resources==6.4.5
-    # via gradio
 jinja2==3.1.4
     # via gradio
-kiwisolver==1.4.7
-    # via matplotlib
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.5
     # via
     #   gradio
     #   jinja2
-matplotlib==3.8.4
-    # via gradio
 mdurl==0.1.2
     # via markdown-it-py
 numpy==1.22.0
     # via
-    #   contourpy
     #   gradio
-    #   matplotlib
     #   pandas
 orjson==3.10.11
     # via gradio
@@ -94,13 +81,10 @@ packaging==24.1
     #   gradio
     #   gradio-client
     #   huggingface-hub
-    #   matplotlib
 pandas==1.5.3
     # via gradio
 pillow==10.4.0
-    # via
-    #   gradio
-    #   matplotlib
+    # via gradio
 pydantic==2.9.2
     # via
     #   fastapi
@@ -111,13 +95,9 @@ pydub==0.25.1
     # via gradio
 pygments==2.18.0
     # via rich
-pyparsing==3.2.0
-    # via matplotlib
 python-dateutil==2.9.0.post0
-    # via
-    #   matplotlib
-    #   pandas
-python-multipart==0.0.17
+    # via pandas
+python-multipart==0.0.12
     # via gradio
 pytz==2024.2
     # via pandas
@@ -131,6 +111,8 @@ rich==13.9.3
     # via typer
 ruff==0.7.3
     # via gradio
+safehttpx==0.1.1
+    # via gradio
 semantic-version==2.10.0
     # via gradio
 shellingham==1.5.4
@@ -142,7 +124,9 @@ sniffio==1.3.1
     #   anyio
     #   httpx
 starlette==0.41.2
-    # via fastapi
+    # via
+    #   fastapi
+    #   gradio
 tomlkit==0.12.0
     # via gradio
 tqdm==4.66.5
@@ -162,9 +146,7 @@ typing-extensions==4.12.2
     #   typer
     #   uvicorn
 urllib3==2.2.3
-    # via
-    #   gradio
-    #   requests
+    # via requests
 uvicorn==0.32.0
     # via gradio
 websockets==12.0
