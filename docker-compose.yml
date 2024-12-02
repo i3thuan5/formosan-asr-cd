@@ -1,12 +1,9 @@
 ---
 services:
   asr:
-    build: ./
-    command: python app.py
-    expose:
-      - 7860
+    build: ./asr/
     volumes:
-      - "./model_cache:/home/user/.cache:rw"
+      - "./model_cache_asr:/home/user/.cache:rw"
     deploy:
       resources:
         reservations:
@@ -15,11 +12,28 @@ services:
               count: all
               capabilities: [gpu]
     networks:
-      - default
       - nginx-bridge
     environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
-      - LETSENCRYPT_HOST=${VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
+    restart: always
+  tts:
+    build: ./tts/
+    volumes:
+      - "./model_cache_tts:/home/user/.cache:rw"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - nginx-bridge
+    environment:
+      - VIRTUAL_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
+      - LETSENCRYPT_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - LETSENCRYPT_EMAIL=ithuan@ithuan.tw
     restart: always
 

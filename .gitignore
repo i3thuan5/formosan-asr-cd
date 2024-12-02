@@ -1,2 +1,3 @@
 .env
-model_cache/
+model_cache*
+venv/
