@@ -117,7 +117,7 @@ python-dateutil==2.9.0.post0
     # via
     #   matplotlib
     #   pandas
-python-multipart==0.0.17
+python-multipart==0.0.18
     # via gradio
 pytz==2024.2
     # via pandas
