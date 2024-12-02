@@ -26,6 +26,11 @@
         path: "{{ tsuanan_path }}/model_cache_asr"
         state: directory
         mode: '1777'
+    - name: 設定辨識model_cache檔案簿仔
+      ansible.builtin.file:
+        path: "{{ tsuanan_path }}/model_cache_asr_kaldi"
+        state: directory
+        mode: '1777'
     - name: 設定合成model_cache檔案簿仔
       ansible.builtin.file:
         path: "{{ tsuanan_path }}/model_cache_tts"
