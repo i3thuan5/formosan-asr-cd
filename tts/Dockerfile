@@ -1,6 +1,7 @@
 FROM registry.hf.space/ithuan-formosan-tts:latest
 
-RUN pip install gradio==4.44.1
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
 
 COPY models.yaml configs/models.yaml
 
