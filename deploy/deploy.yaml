@@ -39,6 +39,9 @@
     - name: 開docker compose up -d
       community.docker.docker_compose_v2:
         project_src: "{{ tsuanan_path }}"
-        build: "always"
+        files:
+          - docker-compose.yml
+          - deploy/docker-compose-production.yml
+        build: "never"
         pull: "always"
         remove_orphans: true
