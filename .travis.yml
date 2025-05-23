@@ -52,7 +52,7 @@ jobs:
           EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
           -d '{
           "data": [
-          "whisper-large-v3_iso-prompt",
+          "whisper-large-v2-all",
           "ami",
           {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
           ]
@@ -92,7 +92,7 @@ jobs:
           EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
           -d '{
           "data": [
-          "whisper-large-v3_iso-prompt",
+          "whisper-large-v2-all",
           "ami",
           {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
           ]
