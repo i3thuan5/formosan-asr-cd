@@ -1,6 +1,3 @@
-whisper-large-v3_iso-prompt:
-  model: ${load_pipe:formospeech/whisper-large-v3-formosan-iso-prompt}
-  dialect_mapping:
-    阿美: ami
-    賽德克: sdq
-    太魯閣: trv
+whisper-large-v2-all:
+  model: ${load_pipe:formospeech/whisper-large-v2-formosan-all}
+  dialect_mapping: null

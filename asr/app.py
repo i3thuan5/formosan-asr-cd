@@ -1,8 +1,10 @@
+import re
+
 import gradio as gr
+import spaces
 import torch
 from omegaconf import OmegaConf
 from transformers import pipeline
-import spaces
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
@@ -19,39 +21,60 @@ def load_pipe(model_id: str):
         device=device,
     )
 
+
 OmegaConf.register_new_resolver("load_pipe", load_pipe)
 
 models_config = OmegaConf.to_object(OmegaConf.load("configs/models.yaml"))
 
+
 @spaces.GPU
 def automatic_speech_recognition(model_id: str, dialect_id: str, audio_file: str):
     model = models_config[model_id]["model"]
+
     generate_kwargs = {
         "task": "transcribe",
         "language": "id",
-        "num_beams": 1,
-        "prompt_ids": torch.from_numpy(model.tokenizer.get_prompt_ids(dialect_id)).to(
-            device
-        ),
+        "num_beams": 5,
     }
-    return model(audio_file, generate_kwargs=generate_kwargs)["text"].replace(f" {dialect_id}", "")
+    if models_config[model_id]["dialect_mapping"] is not None:
+        generate_kwargs["prompt_ids"] = torch.from_numpy(
+            model.tokenizer.get_prompt_ids(dialect_id)
+        ).to(device)
+
+    result = model(audio_file, generate_kwargs=generate_kwargs)["text"].replace(
+        f" {dialect_id}", ""
+    )
+
+    if result[-1] not in ".!?":
+        result = result + "."
+
+    sentences = re.split(r"[.!?] ", result)
+    for i in range(len(sentences)):
+        sentences[i] = sentences[i][0].upper() + sentences[i][1:]
+
+    return " ".join(sentences)
 
 
 def when_model_selected(model_id: str):
     model_config = models_config[model_id]
 
-    dialect_drop_down_choices = [
-        (k, v) for k, v in model_config["dialect_mapping"].items()
-    ]
+    if model_config["dialect_mapping"] is not None:
+        dialect_drop_down_choices = [
+            (k, v) for k, v in model_config["dialect_mapping"].items()
+        ]
 
-    return gr.update(
-        choices=dialect_drop_down_choices,
-        value=dialect_drop_down_choices[0][1],
-    )
+        return gr.update(
+            choices=dialect_drop_down_choices,
+            value=dialect_drop_down_choices[0][1],
+        )
+    else:
+        return gr.update(visible=False)
+
 
 def get_title():
     with open("DEMO.md") as tong:
-        return tong.readline().strip('# ')
+        return tong.readline().strip("# ")
+
 
 demo = gr.Blocks(
     title=get_title(),
@@ -77,11 +100,13 @@ with demo:
 
     dialect_drop_down = gr.Radio(
         choices=[
-            (k, v)
-            for k, v in models_config[default_model_id]["dialect_mapping"].items()
+            "test"
+            # (k, v)
+            # for k, v in models_config[default_model_id]["dialect_mapping"].items()
         ],
-        value=list(models_config[default_model_id]["dialect_mapping"].values())[0],
+        # value=list(models_config[default_model_id]["dialect_mapping"].values())[0],
         label="族別",
+        visible=False,
     )
 
     model_drop_down.input(
