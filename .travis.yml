@@ -58,8 +58,6 @@ jobs:
           ]
           }' | jq .event_id -r`
         - time curl -N "http://localhost/call/predict/${EVENT_ID}"
-
-
       after_failure:
         - docker-compose logs
     - stage: deploy
