@@ -86,3 +86,15 @@ jobs:
           --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
           --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
           --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
+    - name: Online ASR Check
+      script:
+        - >
+          EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
+          -d '{
+          "data": [
+          "whisper-large-v3_iso-prompt",
+          "ami",
+          {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
+          ]
+          }' | jq .event_id -r`
+        - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${EVENT_ID}"
