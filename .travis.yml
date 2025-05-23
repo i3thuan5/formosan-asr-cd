@@ -34,6 +34,34 @@ jobs:
         - pip install tox
       script:
         - tox -e shellcheck
+    - name: Docker Compose
+      service:
+        - docker
+      script:
+        # 試container配docker-compose辨識
+        - git clone --depth 1 https://github.com/i3thuan5/ZuGi.git
+        - docker-compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
+        # 試container配docker-compose辨識
+        - export ASR_VIRTUAL_HOST=localhost
+        - export TTS_VIRTUAL_HOST=localhost2
+        - export ASR_KALDI_VIRTUAL_HOST=localhost3p
+        - docker-compose up -d --build
+        - sleep 1m
+        # 試反應時間
+        - >
+          EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
+          -d '{
+          "data": [
+          "whisper-large-v3_iso-prompt",
+          "ami",
+          {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
+          ]
+          }' | jq .event_id -r`
+        - time curl -N "http://localhost/call/predict/${EVENT_ID}"
+
+
+      after_failure:
+        - docker-compose logs
     - stage: deploy
       name: deploy
       if: (type = push or type = cron) and (branch = main or branch = Ka-kaldi)
@@ -47,15 +75,14 @@ jobs:
         # Recreate the certificate from the secure environment variable
         - chmod 400 "${TRAVIS_TSUKI_SSH_KEY_PATH}"
       script:
-        - '
+        - >
           ansible-playbook -i deploy/inventory_travis deploy/deploy.yaml
-            --extra-vars "tsuanan_repo=`basename ${TRAVIS_REPO_SLUG}`"
-            --extra-vars "branch=${TRAVIS_BRANCH}"
-            --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
-            --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
-            --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
-            --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
-            --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
-            --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
-            --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
-          '
+          --extra-vars "tsuanan_repo=`basename ${TRAVIS_REPO_SLUG}`"
+          --extra-vars "branch=${TRAVIS_BRANCH}"
+          --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
+          --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
+          --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
+          --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
+          --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
+          --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
+          --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
