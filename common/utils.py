@@ -10,6 +10,22 @@ from colors import sa_orange_color, sa_zinc_color
 STATIC_DIR_NAME = 'common_static'
 COMMON_STATIC_ROOT = Path(__file__).parent / STATIC_DIR_NAME
 SAPOLITA_WEBSITE_HOST = os.environ.get('SAPOLITA_WEBSITE_HOST')
+GA_MEASUREMENT_ID = os.environ.get('GA_MEASUREMENT_ID', '')
+
+
+def tsoo_ga_head(ga_id):
+    if not ga_id:
+        return None
+    return (
+        '<script async '
+        'src="https://www.googletagmanager.com/gtag/js?id={gid}"></script>'
+        '<script>'
+        'window.dataLayer = window.dataLayer || [];'
+        'function gtag(){{dataLayer.push(arguments);}}'
+        "gtag('js', new Date());"
+        "gtag('config', '{gid}');"
+        '</script>'
+    ).format(gid=ga_id)
 
 
 @contextmanager
@@ -26,6 +42,7 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
         title=get_title(demo_md_filename),
         delete_cache=(3600, 3600),
         css_paths=(common_css_paths + css_paths),
+        head=tsoo_ga_head(GA_MEASUREMENT_ID),
         theme=gr.themes.Default(
             primary_hue=sa_orange_color,
             neutral_hue=sa_zinc_color,
